@@ -24,51 +24,11 @@ with QuickFPSParams {
 
   io.control.rdata := CSR(io.control.raddr)
 
-//
-//  val bucket_dma = RegInit(Bool(),false.B)
-//
   val bucketAddrTable = SyncReadMem(max_bucket_num,UInt(bitwidth.W))
-//  val bucketLenTable = SyncReadMem(max_bucket_num,UInt(bitwidth.W))
-//
-//  val frontEndTileIds = new Range(0,frontend_tile_num,1)
-//
-//  val ref_point = Reg(new Point())
-//  val buckets_num = Vec(frontend_tile_num,Wire(UInt(log2Up(boundbox_lines_num).W)))
-//  val init = RegInit(Bool(),false.B)
-//  val soft_reset = RegInit(Bool(),false.B)
-//  val travel = RegInit(Bool(),false.B)
-//  val findmax = RegInit(Bool(),false.B)
-//  val iterate = RegInit(Bool(),false.B)
-//  val frontend_tile_dma = RegInit(Bool(),false.B)
-//
-//  val frontend_inited = Wire(UInt(frontend_tile_num.W))
-//  val frontend_traveled = Wire(UInt(frontend_tile_num.W))
-//  val frontend_foundmax = Wire(UInt(frontend_tile_num.W))
-//
-//  val FrontEndTiles = frontEndTileIds.map(frontEndId => Module(new FrontEndTile_rewrite(frontEndId)(p)))
-//
-//
-//  frontEndTileIds.foreach(
-//    idx => {
-//      FrontEndTiles(idx).io.control.ref_point := ref_point
-//      FrontEndTiles(idx).io.control.dma := frontend_tile_dma
-//      FrontEndTiles(idx).io.control.init := init
-//      FrontEndTiles(idx).io.control.findmax := findmax
-//      FrontEndTiles(idx).io.control.travel := travel
-//      FrontEndTiles(idx).io.control.soft_reset := soft_reset
-//      FrontEndTiles(idx).io.control.iterate := iterate
-//      FrontEndTiles(idx).io.control.bucket_num := buckets_num(idx)
-//
-//      frontend_inited(idx) := FrontEndTiles(idx).io.control.inited
-//      frontend_traveled(idx) := FrontEndTiles(idx).io.control.traveled
-//      frontend_foundmax(idx) := FrontEndTiles(idx).io.control.foundmax
-//
-//      buckets_num(idx) := CSR(idx + 2)
-//    }
-//  )
+
   val sIDLE::sSetupRead::sREAD::sRUN::Nil = Enum(4)
 
-  val dma = Module(new Dma(1024, UInt(bitwidth.W), Some("src/test/resource/linear-mem.txt")))
+  val dma = Module(new Dma(1024, UInt(bitwidth.W), Some("/Users/hanmeng/Documents/research/sample_case/src/test/resource/linear-mem.txt")))
   val dma_io = Wire(new DmaIO(bitwidth))
 
   dma_io <> dma.io

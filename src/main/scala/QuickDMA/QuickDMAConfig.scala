@@ -41,15 +41,7 @@ trait QuickFPSParams{
   def control_addr_width: Int = 5
 }
 
-class Point(implicit p: Parameters) extends Bundle with QuickFPSParams{
-  val value  = Vec(dim,SInt(bitwidth.W))
-  def xyz = Seq(value.apply(0), value.apply(1),value.apply(2))
-  def zero = Seq(0.S(bitwidth.W), 0.S(bitwidth.W),0.S(bitwidth.W))
-}
 
-class PointWithDistance(implicit p: Parameters) extends Point with QuickFPSParams{
-  val distance = SInt(bitwidth.W)
-}
 
 class WRIO[T <: Data](gen:T, val addr_width: Int) extends Bundle{
   val raddr = Input(UInt(addr_width.W))
@@ -60,22 +52,6 @@ class WRIO[T <: Data](gen:T, val addr_width: Int) extends Bundle{
   val wdata = Input(gen)
   val wen = Input(Bool())
 }
-class FrontEnd_DataIO(implicit p:Parameters) extends Bundle
-  with QuickFPSParams
-{
-  val point = new Point()
-  val num = UInt(log2Up(delay_table_num).W)
-  val idx = UInt(log2Up(delay_table_num).W)
-  val bucket_idx = UInt(log2Up(max_bucket_num).W)
-}
-
-class FrontEnd_HeadIO(implicit p:Parameters) extends Bundle
-  with QuickFPSParams
-{
-  val num = UInt(log2Up(delay_table_num).W)
-  val frontend_id = UInt(log2Up(frontend_tile_num).W)
-}
-
 
 
 

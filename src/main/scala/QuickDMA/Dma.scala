@@ -99,7 +99,7 @@ class Dma[A <: Data](size: Int, gen: A, initFile: Option[String] = None) extends
 
   /* Synchronous Read Memory that encapsulates the virtual memory space of the accelerator */
   val mem: SyncReadMem[A] = SyncReadMem(size, gen.cloneType)
-  initFile.map(loadMemoryFromFile(mem, _))
+  //initFile.map(loadMemoryFromFile(mem, _))
 
   readQueue.io.enq.bits := mem.read(req.bits.index)
 
